@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tyg.tygyy.dao.LoginDao">
+    <select id="selectAdmin"  resultType="com.tyg.tygyy.entity.Admin">
+        select * from admin where username = #{username} and password = #{password}
+    </select>
+
+    <select id="selectUser"  resultType="com.tyg.tygyy.entity.User">
+        select * from user where phone = #{username} and pwd = #{password}
+    </select>
+
+
+
+    <update id="updateAdmin" parameterType="com.tyg.tygyy.entity.Admin" >
+      update admin set
+        password = #{admin.password}
+        where id = #{admin.id}
+     </update>
+
+</mapper>

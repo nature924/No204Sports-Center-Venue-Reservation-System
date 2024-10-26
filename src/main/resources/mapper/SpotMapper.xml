@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tyg.tygyy.dao.SpotDao">
+
+    <select id="findList" parameterType="com.tyg.tygyy.entity.Spot" resultType="com.tyg.tygyy.entity.Spot">
+        select * from spot where 1 = 1
+
+        <if test="data.name != null and data.name != '' ">
+            <bind name="name" value="'%' + data.name + '%'"/>
+            and name like #{name}
+        </if>
+
+        <if test="data.cid != null and data.cid != '' ">
+            and cid = #{data.cid}
+        </if>
+
+        <if test="data.status != null and data.status != '' ">
+            and status = #{data.status}
+        </if>
+        order by id asc
+    </select>
+
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.tyg.tygyy.entity.Spot">
+        select * from spot where id=#{id}
+    </select>
+
+    <select id="selectBykey" parameterType="com.tyg.tygyy.entity.Spot" resultType="com.tyg.tygyy.entity.Spot">
+        select * from spot where name= #{data.name}
+    </select>
+
+
+
+ <select id="selectStaticsSpot"  resultType="com.tyg.tygyy.entity.Statics">
+  select   count(1) as counts , ca.cname as names  from spot sp left join category ca on sp.cid = ca.id  GROUP BY names
+ </select>
+
+
+ <select id="selectStaticsSpotRecord"  resultType="com.tyg.tygyy.entity.Statics">
+select count(1) as counts , sp.name as names  from record re left join spot sp on re.sid = sp.id  GROUP BY names
+
+</select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+	    delete from spot
+	    where id = #{id}
+	  </delete>
+
+    <update id="update" parameterType="com.tyg.tygyy.entity.Spot" >
+      update spot set
+        cid = #{data.cid},
+        detail = #{data.detail},
+        address = #{data.address},
+        photo = #{data.photo},
+        note = #{data.note},
+        charger = #{data.charger},
+        phone = #{data.phone},
+        name = #{data.name}
+        where id = #{data.id}
+
+     </update>
+
+    <update id="updateStateSpot" parameterType="com.tyg.tygyy.entity.Spot" >
+      update spot set
+        status = #{data.status}
+        where id = #{data.id}
+     </update>
+
+    <insert id="add" parameterType="com.tyg.tygyy.entity.Spot" >
+      insert into spot (
+      name,
+      cid,
+      detail,
+      address,
+      photo,
+      note,
+      charger,
+      phone
+      ) values
+      (
+      #{data.name},
+      #{data.cid},
+      #{data.detail},
+      #{data.address},
+      #{data.photo},
+      #{data.note},
+      #{data.charger},
+      #{data.phone}
+      )
+
+
+
+     </insert>
+
+</mapper>

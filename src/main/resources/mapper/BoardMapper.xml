@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tyg.tygyy.dao.BoardDao">
+
+    <select id="findList" parameterType="com.tyg.tygyy.entity.Board" resultType="com.tyg.tygyy.entity.Board">
+        select * from board where 1 = 1
+
+        <if test="data.title != null and data.title != '' ">
+            <bind name="title" value="'%' + data.title + '%'"/>
+            and title like #{title}
+        </if>
+
+        order by id asc
+    </select>
+
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.tyg.tygyy.entity.Board">
+        select * from board where id=#{id}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+	    delete from board
+	    where id = #{id}
+	  </delete>
+
+    <update id="update" parameterType="com.tyg.tygyy.entity.Board" >
+      update board set
+        title = #{data.title},
+        detail = #{data.detail},
+        photo = #{data.photo},
+        editor = #{data.editor}
+        where id = #{data.id}
+     </update>
+
+    <insert id="add" parameterType="com.tyg.tygyy.entity.Board" >
+      insert into board (
+      title,
+      detail,
+      editor,
+      photo,
+      create_time
+      ) values
+      (
+      #{data.title},
+      #{data.detail},
+      #{data.editor},
+      #{data.photo},
+      #{data.create_time}
+      )
+     </insert>
+
+</mapper>

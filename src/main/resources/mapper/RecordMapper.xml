@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tyg.tygyy.dao.RecordDao">
+
+    <select id="findList" parameterType="com.tyg.tygyy.entity.Record" resultType="com.tyg.tygyy.entity.Record">
+        select * from record where 1 = 1
+
+        <if test="data.yy_date != null and data.yy_date != '' ">
+            <bind name="yy_date" value="'%' + data.yy_date + '%'"/>
+            and yy_date like #{yy_date}
+        </if>
+
+        <if test="data.uid != null and data.uid != '' ">
+            and uid = #{data.uid}
+        </if>
+
+        <if test="data.sid != null and data.sid != '' ">
+            and sid = #{data.sid}
+        </if>
+
+        order by id asc
+    </select>
+
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.tyg.tygyy.entity.Record">
+        select * from record where id=#{id}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+	    delete from record
+	    where id = #{id}
+	  </delete>
+
+    <update id="update" parameterType="com.tyg.tygyy.entity.Record" >
+      update record set
+        yy_date = #{data.yy_date}
+        where id = #{data.id}
+     </update>
+
+    <update id="updateRecordState" parameterType="com.tyg.tygyy.entity.Record" >
+      update record set
+        state = #{record.state}
+        where id = #{record.id}
+     </update>
+
+    <insert id="add" parameterType="com.tyg.tygyy.entity.Record" >
+      insert into record (
+      
+      yybh,
+      sid,
+      uid,
+      yy_date,
+      start_time,
+      end_time,
+      note,
+      create_time
+      ) values
+      (
+      #{data.yybh},
+      #{data.sid},
+      #{data.uid},
+      #{data.yy_date},
+      #{data.start_time},
+      #{data.end_time},
+      #{data.note},
+      #{data.create_time}
+      )
+     </insert>
+
+</mapper>

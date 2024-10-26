@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tyg.tygyy.dao.UserDao">
+
+    <select id="findList" parameterType="com.tyg.tygyy.entity.User" resultType="com.tyg.tygyy.entity.User">
+        select * from user where 1 = 1
+
+        <if test="data.realname != null and data.realname != '' ">
+            <bind name="realname" value="'%' + data.realname + '%'"/>
+            and realname like #{realname}
+        </if>
+
+        order by id asc
+    </select>
+
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.tyg.tygyy.entity.User">
+        select * from user where id=#{id}
+    </select>
+
+    <select id="selectBykey" parameterType="com.tyg.tygyy.entity.User" resultType="com.tyg.tygyy.entity.User">
+        select * from user where phone= #{data.phone}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+	    delete from user
+	    where id = #{id}
+	  </delete>
+
+    <update id="update" parameterType="com.tyg.tygyy.entity.User" >
+      update user set
+        realname = #{data.realname},
+        nickname = #{data.nickname},
+        pwd = #{data.pwd},
+        sex = #{data.sex},
+        phone = #{data.phone},
+        address = #{data.address},
+        tx = #{data.tx}
+        where id = #{data.id}
+
+
+
+     </update>
+
+    <insert id="add" parameterType="com.tyg.tygyy.entity.User" >
+      insert into user (
+      realname,
+      nickname,
+      pwd,
+      sex,
+      phone,
+      address,
+      registe_time,
+      tx
+      ) values (
+      #{data.realname},
+      #{data.nickname},
+      #{data.pwd},
+      #{data.sex},
+      #{data.phone},
+      #{data.address},
+      #{data.registe_time},
+      #{data.tx}
+      )
+     </insert>
+
+</mapper>

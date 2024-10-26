@@ -1,0 +1,17 @@
+#jdbc数据源
+spring:
+  datasource:
+    username: root
+    password: root
+    #?serverTimezone=UTC解决时区的报错
+    url: jdbc:mysql://localhost:3306/db_tygyy?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+    cache: false
+
+#扫描mapper配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.tyg.tygyy.entity
+server:
+  port : 8081
